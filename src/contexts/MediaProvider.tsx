@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect } from "react";
+import { toast } from "sonner";
 import { useMedia } from "@/hooks/useMedia";
 import { fetchMedias } from "@/services/mediaService";
 import type { BaseMedia, Filter, SortModes } from "@/types";
@@ -53,6 +54,9 @@ export const MediaProvider = ({ children }: { children: React.ReactNode }) => {
       .then(() => {
         setLoading(false);
       }).catch(() => {
+        if (!signal.aborted) {
+          toast.error("Failed to fetch more media.");
+        }
         setHasNextPage(true);
       });
 
