@@ -10,44 +10,48 @@ export type BaseMedia = {
   };
 }
 
-export enum SortModes {
-  POPULARITY = "POPULARITY_DESC",
-  SCORE = "SCORE_DESC",
-  TRENDING = "TRENDING_DESC",
-  FAVOURITES = "FAVOURITES_DESC",
-  ID = "ID_DESC",
-  START_DATE = "START_DATE_DESC",
-}
+export type SortMode = keyof typeof sortModeLabels
+export const sortModeLabels = {
+  POPULARITY_DESC: "Popularity",
+  SCORE_DESC: "Score",
+  TRENDING_DESC: "Trending",
+  FAVOURITES_DESC: "Favourites",
+  ID_DESC: "Date Added",
+  START_DATE_DESC: "Release Date",
+};
 
 export type Filter = {
   search: string;
   genres: string[];
-  statuses: Statuses[];
-  formats: AnimeFormats[];
+  statuses: Status[];
+  formats: AnimeFormat[];
   year: string | null;
-  season: Seasons | null;
+  season: Season | null;
 }
 
-export enum Seasons {
-  WINTER = "WINTER",
-  SPRING = "SPRING",
-  SUMMER = "SUMMER",
-  FALL = "FALL",
-}
+export type Status = keyof typeof statusLabels
+export const statusLabels = {
+  FINISHED: "Finished",
+  RELEASING: "Releasing",
+  NOT_YET_RELEASED: "Not Yet Released",
+  CANCELLED: "Cancelled",
+};
 
-export enum Statuses {
-  FINISHED = "FINISHED",
-  RELEASING = "RELEASING",
-  UNRELEASED = "NOT_YET_RELEASED",
-  CANCELLED = "CANCELLED",
-}
+export type Season = keyof typeof seasonLabels
+export const seasonLabels = {
+  WINTER: "Winter",
+  SPRING: "Spring",
+  SUMMER: "Summer",
+  FALL: "Fall",
+};
 
-export enum AnimeFormats {
-  TV = "TV",
-  TV_SHORT = "TV_SHORT",
-  MOVIE = "MOVIE",
-  OVA = "OVA",
-  ONA = "ONA",
-  SPECIAL = "SPECIAL",
-  MUSIC = "MUSIC",
-}
+export type AnimeFormat = keyof typeof animeFormatLabels
+export const animeFormatLabels = {
+  TV: "TV Show",
+  TV_SHORT: "TV Short",
+  MOVIE: "Movie",
+  OVA: "OVA",
+  ONA: "ONA",
+  SPECIAL: "Special",
+  MUSIC: "Music",
+};
