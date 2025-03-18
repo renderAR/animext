@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { SortModes, type BaseMedia, type Filter } from "@/types";
+import { SortMode, type BaseMedia, type Filter } from "@/types";
 
 export const useMedia = () => {
   const router = useRouter();
@@ -13,8 +13,8 @@ export const useMedia = () => {
   const [hasNextPage, setHasNextPage] = useState(true);
 
   // using purely URL params as state may be slow, so we also use UI states for filter/sort
-  const [sort, _setSort] = useState(searchParams.get("sort") as SortModes || SortModes.SCORE);
-  const setSort = (sort: SortModes) => {
+  const [sort, _setSort] = useState<SortMode>(searchParams.get("sort") as SortMode || "SCORE_DESC");
+  const setSort = (sort: SortMode) => {
     _setSort(sort);
     const params = new URLSearchParams(searchParams.toString());
     params.set("sort", sort);

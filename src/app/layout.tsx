@@ -1,16 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Overpass } from "next/font/google";
 import { MediaProvider } from "@/contexts/MediaProvider";
 import "./globals.css";
 import { Suspense } from "react";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const overpass = Overpass({
+  variable: "--font-overpass",
   subsets: ["latin"],
 });
 
@@ -26,9 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${overpass.variable} antialiased`}>
         <Suspense>
           <MediaProvider>
             <main className="min-h-screen h-full">

@@ -4,18 +4,18 @@ import { createContext, useContext, useEffect } from "react";
 import { toast } from "sonner";
 import { useMedia } from "@/hooks/useMedia";
 import { fetchMedias } from "@/services/mediaService";
-import type { BaseMedia, Filter, SortModes } from "@/types";
+import type { BaseMedia, Filter, SortMode } from "@/types";
 
 type MediaContextInfo = {
   medias: BaseMedia[],
   filter: Filter,
-  sort: SortModes,
+  sort: SortMode,
   page: number,
   hasNextPage: boolean,
   isLoading: boolean,
   loadMedias: (page: number, signal?: AbortSignal) => Promise<void>,
   setFilter: (filter: Filter) => void,
-  setSort: (sort: SortModes) => void,
+  setSort: (sort: SortMode) => void,
   setLoading: (isLoading: boolean) => void,
 }
 
