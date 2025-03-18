@@ -1,17 +1,32 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import RelationCard from "@/components/RelationCard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { fetchMediaDetails } from "@/services/mediaService";
 import { durationToString, fuzzyDateToString } from "@/lib/utils";
-import { type AnimeFormat, animeFormatLabels } from "@/types";
+import { animeFormatLabels, relationLabels, type AnimeFormat } from "@/types";
 
 export default async function Anime({ params }: { params: Promise<{ id: number }> }) {
   const { id } = (await params);
-  const media = await fetchMediaDetails(id);
-  if (!media) {
+  const mediaDetails = await fetchMediaDetails(id);
+  if (!mediaDetails) {
     notFound();
   }
+
+  const orderedRelations = Object.keys(relationLabels);
+
+  const media = {
+    ...mediaDetails,
+    relations: mediaDetails.relations.edges
+      .filter(({ node }) => node.type !== "MANGA")
+      .sort((a, b) => (
+        orderedRelations.findIndex((v) => a.relationType === v) - orderedRelations.findIndex((v) => b.relationType === v))
+      ).map((relation) => ({
+        relation: relation.relationType,
+        ...relation.node,
+      })),
+  };
 
   const TitleText = ({ ...props }) => (
     <h1
@@ -107,6 +122,12 @@ export default async function Anime({ params }: { params: Promise<{ id: number }
     </div>
   );
 
+  const RelationCards = ({ ...props }) => (
+    <div {...props}>
+      {media.relations.map((relation) => <RelationCard key={relation.id} media={relation} />)}
+    </div>
+  );
+
   return (
     <div className="flex flex-col px-4 gap-4">
       <div className="flex flex-col md:flex-row gap-4">
@@ -133,6 +154,7 @@ export default async function Anime({ params }: { params: Promise<{ id: number }
           <DescriptionText />
         </div>
       </div>
+      <RelationCards className="grid grid-cols-1 md:grid-cols-2 mt-12 lg:grid-cols-3 gap-4" />
     </div>
   );
 }

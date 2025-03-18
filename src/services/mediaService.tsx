@@ -1,4 +1,4 @@
-import { SortMode, type BaseMedia, type Filter } from "@/types";
+import type { BaseMedia, RelatedMedia, Relation, SortMode, Filter, AnimeFormat, Status, Season } from "@/types";
 
 type FetchMediasGraphqlVariables = {
   type: "ANIME";
@@ -13,18 +13,25 @@ type MediaDetails = {
   description: string;
   genres: string[];
   tags: { name: string; isMediaSpoiler: boolean }[];
-  format: string;
+  format: AnimeFormat;
   episodes: number;
   duration: number;
   volumes: number;
   chapters: number;
-  status: string;
-  season: string;
+  status: Status;
+  season: Season;
   seasonYear: number;
   startDate: { year: number; month: number; day: number };
   endDate: { year: number; month: number; day: number };
   averageScore: number;
   favourites: number;
+  relations: {
+    edges: {
+      id: number;
+      relationType: Relation;
+      node: Omit<RelatedMedia, "relation">;
+    }[];
+  };
 } & Omit<BaseMedia, "id" | "coverImage">
 
 const apiUrl = "https://graphql.anilist.co";
@@ -155,6 +162,25 @@ export const fetchMediaDetails = async (id: number) => {
       }
       averageScore
       favourites
+      relations {
+        edges {
+          id
+          relationType(version: 2)
+          node {
+            id
+            title {
+              romaji
+              english
+            }
+            format
+            type
+            status(version: 2)
+            coverImage {
+              medium
+            }
+          }
+        }
+      }
     }
   }
   `;
