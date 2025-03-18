@@ -10,6 +10,30 @@ export type BaseMedia = {
   };
 }
 
+export type RelatedMedia = {
+  relation: Relation;
+  format: AnimeFormat;
+  status: Status;
+  coverImage: { medium: string };
+} & Omit<BaseMedia, "coverImage">
+
+export type Relation = keyof typeof relationLabels
+export const relationLabels = {
+  SOURCE: "Source",
+  ADAPTATION: "Adaptation",
+  PARENT: "Parent",
+  PREQUEL: "Prequel",
+  SEQUEL: "Sequel",
+  ALTERNATIVE: "Alternative",
+  SIDE_STORY: "Side Story",
+  SPIN_OFF: "Spin-off",
+  SUMMARY: "Summary",
+  CHARACTER: "Character",
+  COMPILATION: "Compilation",
+  CONTAINS: "Contains",
+  OTHER: "Other",
+};
+
 export type SortMode = keyof typeof sortModeLabels
 export const sortModeLabels = {
   POPULARITY_DESC: "Popularity",

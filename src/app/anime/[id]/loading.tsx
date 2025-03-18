@@ -39,6 +39,11 @@ export default async function Loading() {
           <Skeleton className="h-5 w-1/2 w-3/4" />
         </div>
       </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 mt-12 lg:grid-cols-3 gap-4">
+        <Skeleton className="h-29 w-full rounded-md" />
+        <Skeleton className="h-29 w-full rounded-md" />
+        <Skeleton className="h-29 w-full rounded-md" />
+      </div>
     </div>
   );
 }
