@@ -1,6 +1,7 @@
 "use client";
 
 import MediaCard from "@/components/MediaCard";
+import MediaFilters from "@/components/MediaFilters";
 import MediaLoader from "@/components/MediaLoader";
 import { useMediaContext } from "@/contexts/MediaProvider";
 
@@ -9,6 +10,7 @@ export default function Home() {
 
   return (
     <main className="px-4 md:px-16 flex flex-col gap-6 h-101vh">
+      <MediaFilters />
       {medias.length === 0 && !isLoading && !hasNextPage
         ? <div className="w-full flex justify-center align-center">No results found.</div>
         : <div className="grid gap-12 grid-cols-[repeat(auto-fill,minmax(100px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(125px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(185px,1fr))]">
