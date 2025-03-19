@@ -1,0 +1,51 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { useMediaContext } from "@/contexts/MediaProvider";
+import MediaCard from "@/components/MediaCard";
+import SkeletonCard from "@/components/SkeletonCard";
+import { fetchFavouriteMedias } from "@/services/mediaService";
+import { BaseMedia } from "@/types";
+
+export default function Media() {
+  const { favourites, isLoading, setLoading } = useMediaContext();
+  const [favouriteMedias, setFavouriteMedias] = useState<BaseMedia[] | null>(null);
+
+  useEffect(() => {
+    setLoading(true);
+    const mediaIds = Object.keys(favourites).map((mediaId) => Number(mediaId));
+    if (mediaIds.length === 0) {
+      return;
+    }
+
+    fetchFavouriteMedias(mediaIds)
+      .then(({ media }) => {
+        setFavouriteMedias(media.sort((a, b) => favourites[b.id] - favourites[a.id]));
+      })
+      .catch(() => toast.error("Failed to load favourites."))
+      .finally(() => setLoading(false));
+
+    return () => {
+      if (isLoading) {
+        setLoading(false);
+      }
+    };
+  }, [favourites]);
+
+  return (
+    <main className="px-4 md:px-16 py-20 flex flex-col gap-6 h-101vh">
+      {favouriteMedias && favouriteMedias.length === 0 && <div className="w-full flex justify-center align-center">No favourites found.</div>}
+      {<div className="grid gap-12 grid-cols-[repeat(auto-fill,minmax(100px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(125px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(185px,1fr))]">
+        {isLoading
+          ? Array(12).fill(null).map((_, index) => <SkeletonCard key={index} />)
+          : favouriteMedias && favouriteMedias.map((item, index: number) => (
+            <MediaCard key={item.id} media={item} fadeinDelay={15 * index} />
+          ))
+        }
+      </div>
+      }
+    </main>
+
+  );
+}

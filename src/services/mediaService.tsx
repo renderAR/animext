@@ -193,3 +193,46 @@ export const postFavourites = async (favourites: Record<number, number>) => {
   await new Promise((resolve) => setTimeout(resolve, 500));
   localStorage.setItem("favourites", JSON.stringify(favourites));
 };
+
+export const fetchFavouriteMedias = async (favourites: number[]) => {
+  const variables = { idIn: favourites };
+  const query = `
+    query Page($idIn: [Int]) {
+      Page {
+        media(id_in: $idIn) {
+          id
+          title {
+            english
+            romaji
+          }
+          coverImage {
+            large
+          }
+        }
+      }
+    }
+  `;
+
+  const requestOptions = {
+    method: "POST",
+    body: JSON.stringify({ query, variables }),
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+  };
+
+  try {
+    const response = await fetch(apiUrl, requestOptions);
+    const { data } = await response.json();
+    const { media } = data?.Page;
+
+    return {
+      hasNextPage: false,
+      media: !media?.length ? [] : media as BaseMedia[],
+    };
+  } catch (error) {
+    console.error(error);
+    return { hasNextPage: false, media: [] };
+  }
+};
