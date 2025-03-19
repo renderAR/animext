@@ -4,10 +4,14 @@
 
 A Next.js anime web app with features inspired by AniList using their public GraphQL API.
 
+![Homepage screenshot](./docs/app.png)
+
 ## Features
 
 - **Anime Discovery**: Browse and search through a curated list of anime
-- **Responsive Design**: Supports both desktop and mobile devices
+- **Favourites System**: Keep track of favorited anime with no sign-in required
+- **Theme Toggling**: Pick between light and dark theme modes
+- **Mobile Support**: View the app from any device thanks to its responsive design
 
 ## Tech Stack
 - Next.js / React
@@ -18,6 +22,7 @@ A Next.js anime web app with features inspired by AniList using their public Gra
 ## Getting Started
 
 ```bash
+# node and npm required
 npm install
 npm run dev
 # enter https://localhost:3000

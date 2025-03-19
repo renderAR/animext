@@ -4,6 +4,7 @@ import { Overpass } from "next/font/google";
 import AppHeader from "@/components/AppHeader";
 import AppFooter from "@/components/AppFooter";
 import { MediaProvider } from "@/contexts/MediaProvider";
+import { ThemeProvider } from "@/contexts/ThemeProvider";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -23,20 +24,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${overpass.variable} antialiased`}>
-        <Toaster richColors />
-        <AppHeader />
-        <Suspense>
-          <MediaProvider>
-            <main className="min-h-screen h-full">
-              <div className="m-auto pt-20 pb-8 max-w-[1520px]">
-                {children}
-              </div>
-            </main>
-          </MediaProvider>
-        </Suspense>
-        <AppFooter />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Toaster richColors />
+          <AppHeader />
+          <Suspense>
+            <MediaProvider>
+              <main className="min-h-screen h-full">
+                <div className="m-auto pt-20 pb-8 max-w-[1520px]">
+                  {children}
+                </div>
+              </main>
+            </MediaProvider>
+          </Suspense>
+          <AppFooter />
+        </ThemeProvider>
       </body>
     </html>
   );

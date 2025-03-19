@@ -8,8 +8,8 @@ type Props = {
 
 export default function RelationCard({ media }: Props) {
   return (
-    <div className="flex flex-row h-29 rounded-md overflow-hidden bg-card shadow-md">
-      <div className="relative h-29 w-[85px] min-w-[85px]">
+    <div className="flex flex-row h-29 rounded-md overflow-hidden bg-card shadow-md dark:border">
+      <div className="relative h-full w-[85px]">
         <Link href={`/${media.type === "MANGA" ? "manga" : "anime"}/${media.id}`}>
           <Image
             src={media.coverImage.medium}
@@ -19,7 +19,7 @@ export default function RelationCard({ media }: Props) {
         </Link>
       </div>
 
-      <div className="flex flex-col px-2 py-2 line-clamp-1">
+      <div className="flex flex-col px-2 pt-1 pb-2 line-clamp-1">
         <span className="font-bold">{relationLabels[media.relation]}</span>
         <Link
           className="text-sm md:text-md line-clamp-2"
