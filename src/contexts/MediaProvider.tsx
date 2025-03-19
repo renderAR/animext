@@ -91,7 +91,7 @@ export const MediaProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     fetchFavourites()
       .then(setFavourites)
-      .catch(() => toast.error("Failed to load bookmarks."));
+      .catch(() => toast.error("Failed to load favourites."));
   }, []);
 
   return (
