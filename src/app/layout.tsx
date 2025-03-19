@@ -1,8 +1,11 @@
-import type { Metadata } from "next";
-import { Overpass } from "next/font/google";
-import { MediaProvider } from "@/contexts/MediaProvider";
-import "./globals.css";
 import { Suspense } from "react";
+import { Toaster } from "sonner";
+import { Overpass } from "next/font/google";
+import AppHeader from "@/components/AppHeader";
+import AppFooter from "@/components/AppFooter";
+import { MediaProvider } from "@/contexts/MediaProvider";
+import type { Metadata } from "next";
+import "./globals.css";
 
 const overpass = Overpass({
   variable: "--font-overpass",
@@ -22,6 +25,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${overpass.variable} antialiased`}>
+        <Toaster richColors />
+        <AppHeader />
         <Suspense>
           <MediaProvider>
             <main className="min-h-screen h-full">
@@ -31,6 +36,7 @@ export default function RootLayout({
             </main>
           </MediaProvider>
         </Suspense>
+        <AppFooter />
       </body>
     </html>
   );
