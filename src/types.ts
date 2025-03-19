@@ -17,6 +17,32 @@ export type RelatedMedia = {
   coverImage: { medium: string };
 } & Omit<BaseMedia, "coverImage">
 
+export type MediaDetails = {
+  coverImage: { extraLarge: string }
+  description: string;
+  genres: string[];
+  tags: { name: string; isMediaSpoiler: boolean }[];
+  format: AnimeFormat;
+  episodes: number;
+  duration: number;
+  volumes: number;
+  chapters: number;
+  status: Status;
+  season: Season;
+  seasonYear: number;
+  startDate: { year: number; month: number; day: number };
+  endDate: { year: number; month: number; day: number };
+  averageScore: number;
+  favourites: number;
+  relations: {
+    edges: {
+      id: number;
+      relationType: Relation;
+      node: Omit<RelatedMedia, "relation">;
+    }[];
+  };
+} & Omit<BaseMedia, "coverImage">
+
 export type Relation = keyof typeof relationLabels
 export const relationLabels = {
   SOURCE: "Source",

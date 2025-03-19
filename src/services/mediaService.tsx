@@ -1,4 +1,4 @@
-import type { BaseMedia, RelatedMedia, Relation, SortMode, Filter, AnimeFormat, Status, Season } from "@/types";
+import type { BaseMedia, MediaDetails, SortMode, Filter } from "@/types";
 
 type FetchMediasGraphqlVariables = {
   type: "ANIME";
@@ -7,32 +7,6 @@ type FetchMediasGraphqlVariables = {
   sort: SortMode | SortMode[];
   seasonYear?: number;
 } & Partial<Filter>
-
-type MediaDetails = {
-  coverImage: { extraLarge: string }
-  description: string;
-  genres: string[];
-  tags: { name: string; isMediaSpoiler: boolean }[];
-  format: AnimeFormat;
-  episodes: number;
-  duration: number;
-  volumes: number;
-  chapters: number;
-  status: Status;
-  season: Season;
-  seasonYear: number;
-  startDate: { year: number; month: number; day: number };
-  endDate: { year: number; month: number; day: number };
-  averageScore: number;
-  favourites: number;
-  relations: {
-    edges: {
-      id: number;
-      relationType: Relation;
-      node: Omit<RelatedMedia, "relation">;
-    }[];
-  };
-} & Omit<BaseMedia, "id" | "coverImage">
 
 const apiUrl = "https://graphql.anilist.co";
 
@@ -197,9 +171,25 @@ export const fetchMediaDetails = async (id: number) => {
   try {
     const response = await fetch(apiUrl, requestOptions);
     const { data } = await response.json();
-    return data?.Media as MediaDetails || null;
+    if (!data?.Media) return null;
+
+    data.Media.id = id;
+    return data.Media as MediaDetails;
   } catch (error) {
     console.error(error);
     return null;
   }
+};
+
+export const fetchFavourites = async () => {
+  // simulate an api request by delaying the response
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  const favourites = localStorage.getItem("favourites");
+  return favourites ? JSON.parse(favourites) as Record<number, number> : {};
+};
+
+export const postFavourites = async (favourites: Record<number, number>) => {
+  // simulate an api request by delaying the response
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  localStorage.setItem("favourites", JSON.stringify(favourites));
 };

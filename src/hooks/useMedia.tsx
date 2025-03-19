@@ -11,6 +11,7 @@ export const useMedia = () => {
   const [page, setPage] = useState(0);
   const [isLoading, setLoading] = useState(false);
   const [hasNextPage, setHasNextPage] = useState(true);
+  const [favourites, setFavourites] = useState({} as Record<number, number>);
 
   // using purely URL params as state may be slow, so we also use UI states for filter/sort
   const [sort, _setSort] = useState<SortMode>(searchParams.get("sort") as SortMode || "SCORE_DESC");
@@ -53,11 +54,13 @@ export const useMedia = () => {
     page,
     hasNextPage,
     isLoading,
+    favourites,
     setMedias,
     setFilter,
     setSort,
     setPage,
-    setLoading,
     setHasNextPage,
+    setLoading,
+    setFavourites,
   };
 };

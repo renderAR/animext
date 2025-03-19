@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import FavouriteToggle from "@/components/FavouriteToggle";
 import RelationCard from "@/components/RelationCard";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { fetchMediaDetails } from "@/services/mediaService";
 import { durationToString, fuzzyDateToString } from "@/lib/utils";
 import { animeFormatLabels, relationLabels, type AnimeFormat } from "@/types";
@@ -134,10 +134,7 @@ export default async function Anime({ params }: { params: Promise<{ id: number }
         <div className="flex flex-col gap-2 w-full max-w-full md:max-w-[33vh]">
           <CoverImage className="relative aspect-17/23 w-full shadow-md rounded-md" />
           <div className="flex flex-row gap-2">
-            <Button
-              className="grow transition duration-200 ease-in-out hover:scale-105"
-              disabled
-            />
+            <FavouriteToggle className="grow" media={media} />
             <ScoreText className="flex items-center gap-1" />
           </div>
         </div>
