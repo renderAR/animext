@@ -3,8 +3,9 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuLink, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
+import ThemeToggle from "./ThemeToggle";
 
-const Header = () => {
+export default function AppHeader() {
   const [isVisible, setVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -24,7 +25,7 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full p-2 shadow-md transition-transform transform z-1 bg-card
+      className={`fixed top-0 left-0 w-full p-2 shadow-md transition-transform transform z-1 bg-card not-dark:bg-[#2b2d42] dark:bg-card border-b sidebar-border
         ${isVisible ? "translate-y-0" : "-translate-y-full"}
       `}
     >
@@ -34,7 +35,7 @@ const Header = () => {
             <NavigationMenuItem>
               <Link href="/" legacyBehavior passHref>
                 <NavigationMenuLink
-                  className={navigationMenuTriggerStyle({ className: "px-4" })
+                  className={navigationMenuTriggerStyle({ className: "px-4 not-dark:text-[#bcbedc]" })
                   }>
                   Search
                 </NavigationMenuLink>
@@ -43,7 +44,7 @@ const Header = () => {
             <NavigationMenuItem>
               <Link href="/favourites" legacyBehavior passHref>
                 <NavigationMenuLink
-                  className={navigationMenuTriggerStyle({ className: "px-4" })}
+                  className={navigationMenuTriggerStyle({ className: "px-4 not-dark:text-[#bcbedc]" })}
                 >
                   Favourites
                 </NavigationMenuLink>
@@ -51,9 +52,9 @@ const Header = () => {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
+
+        <ThemeToggle />
       </div>
     </header>
   );
 };
-
-export default Header;
